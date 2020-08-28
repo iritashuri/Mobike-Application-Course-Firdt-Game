@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="PLAY_BTN_palyer1_lazer" type="id" />
+    <item name="PLAY_BTN_palyer2_lazer" type="id" />
+    <item name="PLAY_BTN_palyer1_whipe" type="id" />
+    <item name="PLAY_BTN_palyer2_whipe" type="id" />
+    <item name="PLAY_BTN_palyer1_box" type="id" />
+    <item name="PLAY_BTN_palyer2_box" type="id" />
+    <item name="progressBar_player1" type="id" />
+    <item name="progressBar_player2" type="id" />
+</resources>
