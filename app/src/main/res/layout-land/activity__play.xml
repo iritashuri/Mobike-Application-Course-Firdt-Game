@@ -117,7 +117,9 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="609dp"
-        android:layout_marginBottom="243dp" />
+        android:layout_marginBottom="243dp"
+        android:max="100"
+        android:progress="100"/>
 
     <ProgressBar
         android:id="@+id/progressBar_player1"
@@ -127,7 +129,10 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="46dp"
-        android:layout_marginBottom="243dp" />
+        android:layout_marginBottom="243dp"
+        android:max="100"
+        android:progress="100"
+        />
 
 </RelativeLayout>
 

@@ -34,11 +34,8 @@ public class Activity_Play extends AppCompatActivity {
         player2_progressBar = findViewById(R.id.progressBar_player2);
 
         // Set initial value to progresBar
-        player1_progressBar.setProgress(200);
-        player2_progressBar.setProgress(200);
-
-
-
+        player1_progressBar.setProgress(100);
+        player2_progressBar.setProgress(100);
 
         play(player1_buttons, player2_buttons, player1_progressBar, player2_progressBar);
 
@@ -54,7 +51,7 @@ public class Activity_Play extends AppCompatActivity {
         player_buttons[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                enemy_progressBar.setProgress(enemy_progressBar.getProgress() - 50);
+                enemy_progressBar.setProgress(enemy_progressBar.getProgress() - 25);
                 switchTurn(player_buttons, enemy_buttons);
             }
 
@@ -62,7 +59,7 @@ public class Activity_Play extends AppCompatActivity {
         player_buttons[1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                enemy_progressBar.setProgress(enemy_progressBar.getProgress() -  40);
+                enemy_progressBar.setProgress(enemy_progressBar.getProgress() -  20);
                 switchTurn(player_buttons, enemy_buttons);
             }
 
@@ -70,7 +67,7 @@ public class Activity_Play extends AppCompatActivity {
         player_buttons[2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                enemy_progressBar.setProgress(enemy_progressBar.getProgress() -  30);
+                enemy_progressBar.setProgress(enemy_progressBar.getProgress() -  15);
                 switchTurn(player_buttons, enemy_buttons);
             }
 
