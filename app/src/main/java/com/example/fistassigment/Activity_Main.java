@@ -9,7 +9,6 @@ import android.widget.Button;
 public class Activity_Main extends AppCompatActivity {
     private Button START_BTN;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
