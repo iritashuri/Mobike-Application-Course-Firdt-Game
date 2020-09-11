@@ -3,7 +3,9 @@ package com.example.fistassigment;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
@@ -42,65 +44,69 @@ public class Activity_Play extends AppCompatActivity {
         player1_progressBar.setProgress(100);
         player2_progressBar.setProgress(100);
 
+
+        play();
+
+    }
+
+
+    private void play() {
+        disableButtons(player2_buttons);
         final Handler handler = new Handler();
         final int delay = 1000; //milliseconds
-
         handler.postDelayed(new Runnable(){
-            public void run(){
-                Log.d("pttt", "end = " + end);
-                play(player1_buttons, player2_buttons, player1_progressBar, player2_progressBar);
+            public  void run(){
+                Log.d("pttt", "player = " + player);
+                if(!end) {
+                    if (player % 2 == 0) {
+                        player_turn(player1_buttons, player2_progressBar, player2_buttons);
+                    } else {
+                        player_turn(player2_buttons, player1_progressBar, player1_buttons);
+                    }
+                    player++;
+                }
                 if(!end)
                     handler.postDelayed(this, delay);
             }
         }, delay);
     }
 
-    private void play(final Button[] player1_buttons, final Button[] player2_buttons, final ProgressBar player1_progressBar, final ProgressBar player2_progressBar) {
-        disableButtons(player2_buttons);
-
-        Log.d("pttt", "player = " + player);
-        if(!end) {
-            if (player%2 == 0) {
-                player_turn(player1_buttons, player2_progressBar, player2_buttons);
-            } else{
-                player_turn(player2_buttons, player1_progressBar, player1_buttons);
-            }
-            player++;
-        }
-    }
-
     private void player_turn(final Button[] player_buttons, final ProgressBar enemy_progressBar, final Button[] enemy_buttons) {
           int random = new Random().nextInt(3);
             switch (random) {
                 case 0:
-                    //player_buttons[0].setBackgroundColor(Color.parseColor("#D9E3F3"));
-                    player_buttons[0].performClick();
-                    enemy_progressBar.setProgress(enemy_progressBar.getProgress() - 25);
-                    switchTurn(player_buttons, enemy_buttons);
-                    //player_buttons[0].setBackgroundColor(Color.parseColor("#3CDDCE"));
+                    press_btn(player_buttons[0], enemy_progressBar, player_buttons, enemy_buttons);
                     Log.d("pttt", "clicked " + random);
                     break;
                 case 1:
-                    //player_buttons[1].setBackgroundColor(Color.parseColor("#D9E3F3"));
-                    player_buttons[1].performClick();
+                    press_btn(player_buttons[1], enemy_progressBar, player_buttons, enemy_buttons);
                     Log.d("pttt", "clicked " + random);
-                    enemy_progressBar.setProgress(enemy_progressBar.getProgress() - 20);
-                    switchTurn(player_buttons, enemy_buttons);
-                    //player_buttons[1].setBackgroundColor(Color.parseColor("#3CDDCE"));
                     break;
                 case 2:
-                    //player_buttons[2].setBackgroundColor(Color.parseColor("#D9E3F3"));
-                    player_buttons[2].performClick();
+                    press_btn(player_buttons[2], enemy_progressBar, player_buttons, enemy_buttons);
                     Log.d("pttt", "clicked " + random);
-                    enemy_progressBar.setProgress(enemy_progressBar.getProgress() - 15);
-                    switchTurn(player_buttons, enemy_buttons);
-                    //player_buttons[2].setBackgroundColor(Color.parseColor("#3CDDCE"));
                     break;
                 default:
                     end = true;
             }
     }
 
+    private void press_btn(Button button, ProgressBar enemy_progressBar, Button[] player_buttons, Button[] enemy_buttons) {
+        changeColor(button);
+        enemy_progressBar.setProgress(enemy_progressBar.getProgress() - 25);
+        switchTurn(player_buttons, enemy_buttons);
+    }
+
+    private void changeColor(final Button btn) {
+        new CountDownTimer(1000, 100) {
+            public void onTick(long millisUntilFinished) {
+                btn.setBackgroundColor(Color.parseColor("#D9E3F3"));
+            }
+            public void onFinish() {
+                btn.setBackgroundColor(Color.parseColor("#3CDDCE"));
+            }
+        }.start();
+    }
     private void switchTurn(Button[] player_buttons,Button[] enemy_buttons){
       checkIfGameEnded();
       disableButtons(player_buttons);
