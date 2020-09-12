@@ -133,7 +133,36 @@
         android:max="100"
         android:progress="100"
         />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:orientation="vertical"
+    android:gravity="center"
 
+    >
+
+    <TextView
+        android:id="@+id/Play_TXT_PlayerTurn"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+
+        android:gravity="center"
+
+        android:text="----" />
+
+    <ImageView
+        android:id="@+id/Play_IMGBTN_Dice"
+        android:layout_width="57dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+
+        app:srcCompat="@drawable/dice1"
+       />
+</LinearLayout>
 </RelativeLayout>
 
 

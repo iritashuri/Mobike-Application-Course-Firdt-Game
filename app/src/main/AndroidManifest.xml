@@ -9,8 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity_TopTen"></activity>
-        <activity android:screenOrientation="landscape" android:configChanges="orientation|keyboardHidden" android:name=".Activity_Play" />
+        <activity android:name=".Activity_End_Game"></activity>
+        <activity android:name=".Activity_TopTen" />
+        <activity
+            android:name=".Activity_Play"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape" />
         <activity android:name=".Activity_Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
