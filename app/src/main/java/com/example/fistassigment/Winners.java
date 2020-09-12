@@ -6,20 +6,24 @@ public class Winners {
     private long timestamp = 0;
     private int numOfMoves = 99;
     private String name = "";
+    private int player_number = 0;
 
-    public Winners(String name) {
+
+    public Winners(String name, int player_number) {
         this.name = name;
+        this.player_number = player_number;
     }
 
     public Winners() {
     }
 
-    public Winners(float lat, float lon, long timestamp, int numOfMoves, String name) {
+    public Winners(float lat, float lon, long timestamp, int numOfMoves, String name, int player_number) {
         this.lat = lat;
         this.lon = lon;
         this.timestamp = timestamp;
         this.numOfMoves = numOfMoves;
         this.name = name;
+        this.player_number = player_number;
 
     }
 
@@ -65,6 +69,16 @@ public class Winners {
 
     public Winners setName(String name) {
         this.name = name;
+        return this;
+    }
+
+
+    public int getPlayer_number() {
+        return player_number;
+    }
+
+    public Winners setPlayer_number(int player_number) {
+        this.player_number = player_number;
         return this;
     }
 }

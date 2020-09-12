@@ -17,13 +17,13 @@ public class Activity_Json extends AppCompatActivity {
 
 
         ArrayList<Winners> scores = new ArrayList<>();
-        scores.add(new Winners(32, 24, 1523423323, 5, ""));
-        scores.add(new Winners(33, -34, 153243323, 22, ""));
-        scores.add(new Winners(-31, -334, 44544545 , 52, ""));
-        scores.add(new Winners(-334, 34, 134544646, 15, ""));
-        scores.add(new Winners(1, 874, 134544646, 25, ""));
-        scores.add(new Winners(22, 74, 134544646, 5, ""));
-        scores.add(new Winners(42, 84, 134544646, 5, ""));
+        scores.add(new Winners(32, 24, 1523423323, 5, "",0));
+        scores.add(new Winners(33, -34, 153243323, 22, "", 0));
+        scores.add(new Winners(-31, -334, 44544545 , 52, "", 0));
+        scores.add(new Winners(-334, 34, 134544646, 15, "", 0));
+        scores.add(new Winners(1, 874, 134544646, 25, "",0));
+        scores.add(new Winners(22, 74, 134544646, 5, "",0));
+        scores.add(new Winners(42, 84, 134544646, 5, "",0));
 
 
         Gson gson = new Gson();

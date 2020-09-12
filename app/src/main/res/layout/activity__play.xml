@@ -72,7 +72,7 @@
         android:layout_marginRight="5dp"
         android:layout_marginBottom="218dp"
         android:background="@color/colorAcctive"
-        android:text="@string/whipe" />
+        android:text="Whip" />
 
     <Button
         android:id="@+id/PLAY_BTN_palyer2_whipe"
@@ -85,7 +85,7 @@
         android:layout_marginRight="5dp"
         android:layout_marginBottom="219dp"
         android:background="@color/colorAcctive"
-        android:text="@string/whipe" />
+        android:text="Whip" />
 
     <ImageView
         android:id="@+id/imageView3"

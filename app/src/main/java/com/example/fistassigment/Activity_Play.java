@@ -10,11 +10,9 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -53,7 +51,7 @@ public class Activity_Play extends AppCompatActivity {
     int player1_dice_score = 1;
     int player2_dice_score = 1;
 
-    // Boolean variable that show if we can start the game - start with no
+    // Boolean variable that define if we can start the game - initial with false
     boolean is_game_can_start = false;
 
     // Take Top10 from SP
@@ -111,9 +109,11 @@ public class Activity_Play extends AppCompatActivity {
 
     }
 
+    // Roll dice with random number and act according the number
     private void rollDice() {
         int randomNumber = rand.nextInt(6) + 1;
         switch (randomNumber){
+            // Show image of the dice number and set payer dice score with the randomNumber
             case 1:
                 Play_IMGBTN_Dice.setImageResource(R.drawable.dice1);
                 setPlayerScore(1);
@@ -140,24 +140,36 @@ public class Activity_Play extends AppCompatActivity {
                 break;
         }
     }
+
+    // Set player dice score
     private void setPlayerScore(int score){
+        // If its first player (player%2 == 0) then update player variable to fit second player and show second player name
         if(player == 0){
             player1_dice_score = score;
             player++;
-            Play_TXT_PlayerTurn.setText("Mickey Mouse");
+            // Set second player in the text view, wait 1 scond
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    Play_TXT_PlayerTurn.setText("Mickey Mouse");
+                }
+            }, 1000);   //1 seconds
+
         }
         else{
+            // If its second player compare between the players score and start new game (if no tie in dice score)
             player2_dice_score = score;
             FindWhoStartAndSetPlayr();
         }
     }
     private void FindWhoStartAndSetPlayr() {
+        // If no tie, the player with the best dice score start
         if(player1_dice_score > player2_dice_score){
             setFirstPlayer(0, "Donald Duck");
         }
         else if(player2_dice_score > player1_dice_score){
             setFirstPlayer(1, "Mickey Mouse");
         }
+        // If tie rol dice again
         else{
             player = 0;
             Play_TXT_PlayerTurn.setText("Tie, Try again");
@@ -166,41 +178,56 @@ public class Activity_Play extends AppCompatActivity {
                 public void run() {
                     Play_IMGBTN_Dice.setImageResource(R.drawable.dice1);
                 }
-            }, 2000);   //2 seconds
+            }, 1000);   //1 seconds
         }
     }
 
+    // Set first player
     private void setFirstPlayer(int start_player, String player_name){
         player = start_player;
-        Play_TXT_PlayerTurn.setText( player_name + " Start\n Press here to play");
+        final String player_name_f = player_name;
 
+        // Set first player and display 'start' button
         handler.postDelayed(new Runnable() {
             public void run() {
+                Play_TXT_PlayerTurn.setText(player_name_f + " Start\n Press here to play");
                 Play_IMGBTN_Dice.setImageResource(R.drawable.video);
             }
-        }, 1000);   //2 seconds
+        }, 1000);   //1 seconds
 
+        // Set is_game_can_start to be true in order to start the game
         is_game_can_start = true;
     }
 
 
-    //Start the game
+    // Start the game
     private void play() {
-        disableButtons(player2_buttons);
+        // Disable buttons of the player who play second
+        if(player%2 == 0)
+            disableButtons(player2_buttons);
+        else
+            disableButtons(player1_buttons);
+        // Set delay to 1 scond - every 1 second 1 player move once
         final int delay = 1000; //milliseconds
         handler.postDelayed(new Runnable(){
             public  void run(){
                 Log.d("pttt", "player = " + player);
+                // If its not the end of the game play 1 move with current player
+                // (if player % 2 == 0) it first player, els its second player
                 if(!end) {
                     if (player % 2 == 0) {
+                        // Update number of moves for first player
                         player1_moves_counter++;
                         player_turn(player1_buttons, player2_progressBar, player2_buttons);
                     } else {
+                        // Update number of moves for second player
                         player2_moves_counter++;
                         player_turn(player2_buttons, player1_progressBar, player1_buttons);
                     }
+                    // Update player turn
                     player++;
                 }
+                // If its not the end of the game repeat this function again every second
                 if(!end)
                     handler.postDelayed(this, delay);
             }
@@ -208,28 +235,34 @@ public class Activity_Play extends AppCompatActivity {
     }
 
     private void player_turn(final Button[] player_buttons, final ProgressBar enemy_progressBar, final Button[] enemy_buttons) {
+         // Act according to a random number between 0 to 2
           int random = rand.nextInt(3);
             switch (random) {
+                // Case 0 - lazer, case 1 - whip, case 3 - box)
                 case 0:
-                    press_btn(player_buttons[0], enemy_progressBar, player_buttons, enemy_buttons, 25);
+                    clickBtn(player_buttons[0], enemy_progressBar, player_buttons, enemy_buttons, 25);
                     break;
                 case 1:
-                    press_btn(player_buttons[1], enemy_progressBar, player_buttons, enemy_buttons, 20);
+                    clickBtn(player_buttons[1], enemy_progressBar, player_buttons, enemy_buttons, 20);
                     break;
                 case 2:
-                    press_btn(player_buttons[2], enemy_progressBar, player_buttons, enemy_buttons, 10);
+                    clickBtn(player_buttons[2], enemy_progressBar, player_buttons, enemy_buttons, 10);
                     break;
                 default:
                     end = true;
             }
     }
 
-    private void press_btn(Button button, ProgressBar enemy_progressBar, Button[] player_buttons, Button[] enemy_buttons, int increase) {
+    private void clickBtn(Button button, ProgressBar enemy_progressBar, Button[] player_buttons, Button[] enemy_buttons, int increase) {
+        // Illustrate button clicking
         changeColor(button);
+        // Increase enemy progress bar according the clicked button
         enemy_progressBar.setProgress(enemy_progressBar.getProgress() - increase);
+        // Switch players turns
         switchTurn(player_buttons, enemy_buttons);
     }
 
+    // Change button color for a second (to illustrate clicking)
     private void changeColor(final Button btn) {
         new CountDownTimer(1000, 100) {
             public void onTick(long millisUntilFinished) {
@@ -240,22 +273,28 @@ public class Activity_Play extends AppCompatActivity {
             }
         }.start();
     }
+
     private void switchTurn(Button[] player_buttons,Button[] enemy_buttons){
+      // check if the game ended
       checkIfGameEnded();
+
+      // If not disable buttons of current player and enable next player buttons
       disableButtons(player_buttons);
       enableButtons(enemy_buttons);
     }
 
     private void checkIfGameEnded() {
+        // If one off the progress bars is empty the game ended
         if(player1_progressBar.getProgress() <= 0 || player2_progressBar.getProgress() <= 0){
-            //Player Win
+            // set end variable  as true
             end = true;
+            // Define winner obj
             Winners winner = new Winners();
+            // Set winner
             if(player1_progressBar.getProgress() <= 0)
                 setWinner("Mickey Mouse", player1_moves_counter, winner);
             else
                 setWinner("Donald Duck", player2_moves_counter, winner);
-            showToast(winner.getName());
             setWinnetOnSP(winner);
             // Check if winner needs to be inserted to to10 and if yes, insert him.
             checkAndAddWinnerToScoresArray(winner);
@@ -296,18 +335,12 @@ public class Activity_Play extends AppCompatActivity {
 
     }
 
+    // Set winner name, number of moves and player number.
     private void setWinner(String name, int player1_moves_counter, Winners winner) {
         winner.setName(name);
         winner.setNumOfMoves(player1_moves_counter);
+        winner.setPlayer_number(player);
         //Set Location
-    }
-
-    private void showToast(String name) {
-        Toast toast = Toast.makeText(getApplicationContext(),
-                "End of the game. " + name + " is the winner!!",
-                Toast.LENGTH_SHORT);
-        toast.setDuration(Toast.LENGTH_LONG);
-        toast.show();
     }
 
     private void disableButtons(Button[] buttons){
