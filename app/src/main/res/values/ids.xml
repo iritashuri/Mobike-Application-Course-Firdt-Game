@@ -8,4 +8,7 @@
     <item name="PLAY_BTN_palyer2_box" type="id" />
     <item name="progressBar_player1" type="id" />
     <item name="progressBar_player2" type="id" />
+    <item name="List_TBL_TopTen" type="id" />
+    <item name="TOPTEN_TBL_TopTen" type="id" />
+
 </resources>

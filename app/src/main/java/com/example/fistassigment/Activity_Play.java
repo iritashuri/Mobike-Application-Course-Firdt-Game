@@ -1,18 +1,18 @@
 package com.example.fistassigment;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -57,7 +57,7 @@ public class Activity_Play extends AppCompatActivity {
     boolean is_game_can_start = false;
 
     // Define Top10 array list to be loaded from SP
-    ArrayList<Winners> tops;
+    private ArrayList<Winners> tops;
 
 
     @Override

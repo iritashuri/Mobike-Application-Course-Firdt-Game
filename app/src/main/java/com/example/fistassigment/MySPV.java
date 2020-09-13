@@ -9,10 +9,6 @@ public class MySPV {
 
 
     public interface KEYS {
-//        public static final String USER_DATA = "USER_DATA";
-//        public static final String USER_LAST_LOGIN_TIME_STAMP = "USER_LAST_LOGIN_TIME_STAMP";
-//        public static final String USER_MAIL = "USER_MAIL";
-//        public static final String MOVIE_NAME = "MOVIE_NAME";
         public static final String CURRENT_WINNER = "CURRENT_WINNER";
         public static final String TOP_TEN = "TOP_TEN";
     }

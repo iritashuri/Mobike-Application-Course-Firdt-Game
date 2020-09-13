@@ -20,13 +20,23 @@
         tools:layout_editor_absoluteY="319dp" />
 
     <Button
-        android:id="@+id/START_BTN"
+        android:id="@+id/Main_BTN_Start"
         android:layout_width="146dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:background="@color/colorgray"
         android:gravity="center"
         android:text="@string/start"
+        tools:layout_editor_absoluteY="319dp" />
+
+    <Button
+        android:id="@+id/Main_BTN_GoToTopTen"
+        android:layout_width="146dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorgray"
+        android:gravity="center"
+        android:text="@string/see_top_ten"
         tools:layout_editor_absoluteY="319dp" />
 
     <LinearLayout
