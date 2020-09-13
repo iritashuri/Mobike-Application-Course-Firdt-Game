@@ -14,6 +14,7 @@ public class MySPV {
 //        public static final String USER_MAIL = "USER_MAIL";
 //        public static final String MOVIE_NAME = "MOVIE_NAME";
         public static final String CURRENT_WINNER = "CURRENT_WINNER";
+        public static final String TOP_TEN = "TOP_TEN";
     }
 
     private SharedPreferences prefs;

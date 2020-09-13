@@ -15,7 +15,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -54,8 +56,9 @@ public class Activity_Play extends AppCompatActivity {
     // Boolean variable that define if we can start the game - initial with false
     boolean is_game_can_start = false;
 
-    // Take Top10 from SP
-    ArrayList<Winners> tops = new ArrayList<>();
+    // Define Top10 array list to be loaded from SP
+    ArrayList<Winners> tops;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +92,8 @@ public class Activity_Play extends AppCompatActivity {
         });
 
 
-
+        // Load top10ArrayList from SP
+        loadTopTenArrayList();
 
         // Set Variables as attack buttons and progress bars
         player1_buttons[0] = findViewById(R.id.PLAY_BTN_palyer1_lazer);
@@ -211,7 +215,6 @@ public class Activity_Play extends AppCompatActivity {
         final int delay = 1000; //milliseconds
         handler.postDelayed(new Runnable(){
             public  void run(){
-                Log.d("pttt", "player = " + player);
                 // If its not the end of the game play 1 move with current player
                 // (if player % 2 == 0) it first player, els its second player
                 if(!end) {
@@ -295,7 +298,7 @@ public class Activity_Play extends AppCompatActivity {
                 setWinner("Mickey Mouse", player1_moves_counter, winner);
             else
                 setWinner("Donald Duck", player2_moves_counter, winner);
-            setWinnetOnSP(winner);
+            setWinneOnSP(winner);
             // Check if winner needs to be inserted to to10 and if yes, insert him.
             checkAndAddWinnerToScoresArray(winner);
 
@@ -305,7 +308,8 @@ public class Activity_Play extends AppCompatActivity {
         }
     }
 
-    private void setWinnetOnSP(Winners winner) {
+    // Set winner in current sp in order to display it in Activity_End_Game page
+    private void setWinneOnSP(Winners winner) {
         String json = gson.toJson(winner);
         mySPV.putString(MySPV.KEYS.CURRENT_WINNER, json);
     }
@@ -319,6 +323,10 @@ public class Activity_Play extends AppCompatActivity {
             }
             if(tops.size() < 10)
                 tops.add(winner);
+
+        // Save tops list with sp in a json format
+        String json = gson.toJson(tops);
+        mySPV.putString(MySPV.KEYS.TOP_TEN, json);
     }
 
     private void addWinnerToTopTen(Winners winner, int location) {
@@ -327,12 +335,11 @@ public class Activity_Play extends AppCompatActivity {
         for(int i = location; i < tops.size(); i ++){
             tops.set(location+1, temp.get(location));
         }
+        // If there is more then 10 wins - remove redundancies
         if(tops.size() > 10){
-            for(int i = 11; i < tops.size() - 1; i++){
+            for(int i = 10; i < tops.size() - 1; i++)
                 tops.remove(i);
-            }
         }
-
     }
 
     // Set winner name, number of moves and player number.
@@ -358,5 +365,16 @@ public class Activity_Play extends AppCompatActivity {
     private void openEndGame() {
         Intent intent = new Intent(Activity_Play.this, Activity_End_Game.class);
         startActivity(intent);
+    }
+
+    // Load top10 array list from sp and convert json format to array list
+    private void loadTopTenArrayList(){
+        String json = mySPV.getString(MySPV.KEYS.TOP_TEN, null);
+        Type type = new TypeToken<ArrayList<Winners>>() {}.getType();
+        tops = gson.fromJson(json, type);
+
+        if (tops == null){
+            tops = new ArrayList<>();
+        }
     }
 }
