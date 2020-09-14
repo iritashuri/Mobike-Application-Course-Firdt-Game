@@ -19,6 +19,7 @@
             android:layout_height="69dp"
             android:text="Winner"
             android:textSize="25dp"
+            android:textColor="@color/colorTitle"
             android:layout_gravity="center"/>
 
         <ImageView
@@ -44,20 +45,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Go to Main Page" />
+                android:text="Go to Main Page"
+                android:background="@drawable/my_button_bg"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
 
             <Button
                 android:id="@+id/ENDGAME_BTN_NEWGMAE"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/start_new_game" />
+                android:text="@string/start_new_game"
+                android:background="@drawable/my_button_bg"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
 
             <Button
                 android:id="@+id/ENDGAME_BTN_TOP10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/my_button_bg"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:text="See Top10" />
 
     </LinearLayout>

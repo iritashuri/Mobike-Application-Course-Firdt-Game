@@ -36,7 +36,7 @@ public class Activity_Play extends AppCompatActivity {
     private ProgressBar player2_progressBar;
 
     // if Player is even - player1 turn, else player2 turn
-    private int player = 0;
+    private int player;
     private  boolean end= false;
 
     // Set number of moves for each player - start with 1
@@ -68,7 +68,8 @@ public class Activity_Play extends AppCompatActivity {
 
         // Set SP
         mySPV = new MySPV(this);
-
+        // Set player
+        player = 0;
         // Set Who is  rolling the dice
         Play_TXT_PlayerTurn = findViewById(R.id.Play_TXT_PlayerTurn);
         Play_TXT_PlayerTurn.setText("Donald Duck");
@@ -120,6 +121,7 @@ public class Activity_Play extends AppCompatActivity {
             // Show image of the dice number and set payer dice score with the randomNumber
             case 1:
                 Play_IMGBTN_Dice.setImageResource(R.drawable.dice1);
+                //Log.d("pttt", "player = " + player + "dic1");
                 setPlayerScore(1);
                 break;
             case 2:
@@ -156,7 +158,7 @@ public class Activity_Play extends AppCompatActivity {
                 public void run() {
                     Play_TXT_PlayerTurn.setText("Mickey Mouse");
                 }
-            }, 1000);   //1 seconds
+            }, 500);   //0.5 seconds
 
         }
         else{
@@ -173,13 +175,13 @@ public class Activity_Play extends AppCompatActivity {
         else if(player2_dice_score > player1_dice_score){
             setFirstPlayer(1, "Mickey Mouse");
         }
-        // If tie rol dice again
+        // If tie roll dice again
         else{
             player = 0;
             Play_TXT_PlayerTurn.setText("Tie, Try again");
-
             handler.postDelayed(new Runnable() {
                 public void run() {
+                    Play_TXT_PlayerTurn.setText("Donald Duck");
                     Play_IMGBTN_Dice.setImageResource(R.drawable.dice1);
                 }
             }, 1000);   //1 seconds
@@ -277,12 +279,17 @@ public class Activity_Play extends AppCompatActivity {
         }.start();
     }
 
-    private void switchTurn(Button[] player_buttons,Button[] enemy_buttons){
+    private void switchTurn(final Button[] player_buttons, Button[] enemy_buttons){
       // check if the game ended
       checkIfGameEnded();
 
       // If not disable buttons of current player and enable next player buttons
       disableButtons(player_buttons);
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                disableButtons(player_buttons);
+            }
+        }, 500);   //1 seconds
       enableButtons(enemy_buttons);
     }
 
@@ -298,9 +305,14 @@ public class Activity_Play extends AppCompatActivity {
                 setWinner("Mickey Mouse", player1_moves_counter, winner);
             else
                 setWinner("Donald Duck", player2_moves_counter, winner);
-            setWinneOnSP(winner);
+            setWinnerOnSP(winner);
+
             // Check if winner needs to be inserted to to10 and if yes, insert him.
             checkAndAddWinnerToScoresArray(winner);
+
+            // Save tops list with sp in a json format
+            String json = gson.toJson(tops);
+            mySPV.putString(MySPV.KEYS.TOP_TEN, json);
 
             // End the Game and open Activity_End_Game to see the winner
             openEndGame();
@@ -309,37 +321,24 @@ public class Activity_Play extends AppCompatActivity {
     }
 
     // Set winner in current sp in order to display it in Activity_End_Game page
-    private void setWinneOnSP(Winners winner) {
+    private void setWinnerOnSP(Winners winner) {
         String json = gson.toJson(winner);
         mySPV.putString(MySPV.KEYS.CURRENT_WINNER, json);
     }
 
     private void checkAndAddWinnerToScoresArray(Winners winner) {
+        boolean is_inserted  = false;
             for (Winners t : tops) {
-                if (winner.getNumOfMoves() < t.getNumOfMoves()) {
-                    addWinnerToTopTen(winner, tops.indexOf(t));
-                    return;
+                if (winner.getNumOfMoves() <= t.getNumOfMoves()) {
+                    tops.add(tops.indexOf(t), winner);
+
+                    is_inserted = true;
+                    break;
                 }
             }
-            if(tops.size() < 10)
+            if(tops.size() < 10 && !is_inserted) {
                 tops.add(winner);
-
-        // Save tops list with sp in a json format
-        String json = gson.toJson(tops);
-        mySPV.putString(MySPV.KEYS.TOP_TEN, json);
-    }
-
-    private void addWinnerToTopTen(Winners winner, int location) {
-        ArrayList<Winners> temp = tops;
-        tops.set(location, winner);
-        for(int i = location; i < tops.size(); i ++){
-            tops.set(location+1, temp.get(location));
-        }
-        // If there is more then 10 wins - remove redundancies
-        if(tops.size() > 10){
-            for(int i = 10; i < tops.size() - 1; i++)
-                tops.remove(i);
-        }
+            }
     }
 
     // Set winner name, number of moves and player number.

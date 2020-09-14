@@ -6,4 +6,6 @@
     <color name="colorAcctive">#3CDDCE</color>
     <color name="colorgray">#D9F3F0</color>
     <color name="colorBlue">#D9E3F3</color>
+    <color name="colorBTN">#6CBEFF</color>
+    <color name="colorTitle">#0A8579</color>
 </resources>

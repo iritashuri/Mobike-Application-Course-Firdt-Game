@@ -1,8 +1,11 @@
 package com.example.fistassigment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -24,7 +27,8 @@ public class Activity_TopTen extends AppCompatActivity implements CallBack_TopTe
     private Fragment_List fragment_map;
 
     //Buttons
-
+    Button TopTen_BTN_Main_Page;
+    Button TopTen_BTN_NEWGMAE;
 
     // Define Top10 array list to be loaded from SP
     private ArrayList<Winners> tops;
@@ -34,12 +38,29 @@ public class Activity_TopTen extends AppCompatActivity implements CallBack_TopTe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__top_ten);
 
+        // Set Buttons
+        findViews();
+
+
         // Set SP
         mySPV = new MySPV(this);
 
-        findViews();
+        // Start s game when clicking ENDGAME_BTN_NEWGMAE button
+        TopTen_BTN_NEWGMAE.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startNewGame();
+            }
+        });
+        // Go to main page when clicking ENDGAME_BTN_Main_Page button
+        TopTen_BTN_Main_Page.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openMainPge();
+            }
+        });
+
         initFragments();
-        // Set fragment_list
     }
 
 
@@ -54,7 +75,8 @@ public class Activity_TopTen extends AppCompatActivity implements CallBack_TopTe
     }
 
     private void findViews() {
-        //main_LBL_title = findViewById(R.id.main_LBL_title);
+        TopTen_BTN_Main_Page = findViewById(R.id.TopTen_BTN_Main_Page);
+        TopTen_BTN_NEWGMAE = findViewById(R.id.TopTen_BTN_NEWGMAE);
     }
 
 
@@ -81,5 +103,15 @@ public class Activity_TopTen extends AppCompatActivity implements CallBack_TopTe
         if (tops == null){
             tops = new ArrayList<>();
         }
+    }
+
+    private void startNewGame() {
+        Intent intent = new Intent(Activity_TopTen.this, Activity_Play.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void openMainPge() {
+        finish();
     }
 }

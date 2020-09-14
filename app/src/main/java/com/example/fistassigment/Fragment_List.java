@@ -1,7 +1,6 @@
 package com.example.fistassigment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,10 +69,12 @@ public class Fragment_List extends Fragment {
     protected void setTable(ArrayList<Winners> tops){
         int counter = 1;
         for(Winners current: tops) {
-            setRowWithWinner(current.getName(), current.getNumOfMoves(), current.getTimestamp(), counter);
-            Log.d("pttt", "current.getName() " + current.getName() + "current.getNumOfMoves() " + current.getNumOfMoves() +  "current.getTimestamp()" + current.getTimestamp());
-            //increase counter
-            counter++;
+            if(counter <= 10) {
+                setRowWithWinner(current.getName(), current.getNumOfMoves(), current.getTimestamp(), counter);
+                //increase counter
+                counter++;
+            }
+            else return;
         }
     }
 
@@ -111,26 +112,21 @@ public class Fragment_List extends Fragment {
         row.addView(numOfMoves);
         row.addView(time);
 
-
-
-
-
         // Add new row to table
         List_TBL_TopTen.addView(row);
     }
 
-    /*
-    *    private void setTextView(TextView txt, String s, TableRow row) {
-        txt.setText(s);
-        txt.setTextSize(TypedValue.COMPLEX_UNIT_DIP,15);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(5,2,5,0);
-        txt.setLayoutParams(params);
+    private void setCell(String str, TableRow row ){
+        // Define columns
+        TextView place = new TextView(getActivity().getApplication());
+        // Set columns text texts
+        place.setText(str);
+        //Style
+        place.setTextSize(TypedValue.COMPLEX_UNIT_DIP,15);
+        place.setGravity(1);
+        row.addView(place);
 
-        // Add columns to new row
-        row.addView(txt);
     }
-*/
 
     private void setTextView(TextView txt, String s) {
         txt.setText(s);
@@ -140,10 +136,7 @@ public class Fragment_List extends Fragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-
         if (!hidden) {
-
         }
     }
-
 }
