@@ -1,11 +1,14 @@
 package com.example.fistassigment;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 public class Activity_Main extends AppCompatActivity {
     private Button Main_BTN_Start;
@@ -32,6 +35,18 @@ public class Activity_Main extends AppCompatActivity {
                 openTop10();
             }
         });
+
+        // Check And require location permission
+        CheckPremission();
+    }
+
+    private void CheckPremission() {
+        if (!(ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                        PackageManager.PERMISSION_GRANTED)) {
+            Toast.makeText(this, R.string.error_permission_map, Toast.LENGTH_LONG).show();
+        }
     }
 
 

@@ -1,9 +1,11 @@
 package com.example.fistassigment;
 
+import java.util.Date;
+
 public class Winners {
     private float lat = 0;
     private float lon = 0;
-    private long timestamp = 0;
+    private String timestamp = "";
     private int numOfMoves = 99;
     private String name = "";
     private int player_number = 0;
@@ -12,18 +14,22 @@ public class Winners {
     public Winners(String name, int player_number) {
         this.name = name;
         this.player_number = player_number;
+        this.timestamp = java.text.DateFormat.getDateTimeInstance().format(new Date());
     }
 
     public Winners() {
+        this.timestamp = java.text.DateFormat.getDateTimeInstance().format(new Date());
     }
 
-    public Winners(float lat, float lon, long timestamp, int numOfMoves, String name, int player_number) {
+    public Winners(float lat, float lon, String timestamp, int numOfMoves, String name, int player_number) {
         this.lat = lat;
         this.lon = lon;
         this.timestamp = timestamp;
         this.numOfMoves = numOfMoves;
         this.name = name;
         this.player_number = player_number;
+        //Set time
+        this.timestamp = java.text.DateFormat.getDateTimeInstance().format(new Date());
 
     }
 
@@ -45,12 +51,12 @@ public class Winners {
         return this;
     }
 
-    public long getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public Winners setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
+    public Winners setTimestamp(String timestamp) {
+        this.timestamp = java.text.DateFormat.getDateTimeInstance().format(new Date());
         return this;
     }
 

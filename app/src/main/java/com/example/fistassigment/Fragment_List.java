@@ -78,53 +78,31 @@ public class Fragment_List extends Fragment {
         }
     }
 
-    private void setRowWithWinner(String winner_name, int numberOfMoves, long timestamp, int counter) {
+    private void setRowWithWinner(String winner_name, int numberOfMoves, String timestamp, int counter) {
         // Define new row
         TableRow row = new TableRow(getActivity());
 
-        // Define columns
-        TextView place = new TextView(getActivity().getApplication());
-        TextView name = new TextView(getActivity().getApplication());
-        TextView numOfMoves = new TextView(getActivity().getApplication());
-        TextView time = new TextView(getActivity().getApplication());
-
         // Set columns text texts
-        place.setText("" + counter);
-        name.setText(winner_name + "        ");
-        numOfMoves.setText("" + numberOfMoves);
-        time.setText("" + timestamp);
+        setCell("" + counter, row);
+        setCell(winner_name, row);
+        setCell(timestamp, row);
+        setCell("" + numberOfMoves, row);
 
-        //Style
-        place.setTextSize(TypedValue.COMPLEX_UNIT_DIP,15);
-        name.setTextSize(TypedValue.COMPLEX_UNIT_DIP,15);
-        numOfMoves.setTextSize(TypedValue.COMPLEX_UNIT_DIP,15);
-        time.setTextSize(TypedValue.COMPLEX_UNIT_DIP,15);
-
-        //Gravity
-        place.setGravity(1);
-        name.setGravity(1);
-        numOfMoves.setGravity(1);
-        time.setGravity(1);
-
-        // Add columns to new row
-        row.addView(place);
-        row.addView(name);
-        row.addView(numOfMoves);
-        row.addView(time);
 
         // Add new row to table
         List_TBL_TopTen.addView(row);
     }
 
-    private void setCell(String str, TableRow row ){
-        // Define columns
-        TextView place = new TextView(getActivity().getApplication());
+    private void setCell(String str, TableRow row){
+        // Define cell
+        TextView txt = new TextView(getActivity().getApplication());
         // Set columns text texts
-        place.setText(str);
+        txt.setText(str);
         //Style
-        place.setTextSize(TypedValue.COMPLEX_UNIT_DIP,15);
-        place.setGravity(1);
-        row.addView(place);
+        txt.setTextSize(TypedValue.COMPLEX_UNIT_DIP,10);
+        txt.setGravity(1);
+        // Add cell to new row
+        row.addView(txt);
 
     }
 

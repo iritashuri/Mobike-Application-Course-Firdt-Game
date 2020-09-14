@@ -20,32 +20,37 @@
             <TextView
                 android:text="Place"
                 android:textColor="@color/colorTitle"
-                android:textSize="10dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"
+                android:textSize="7dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
                 style="?android:listSeparatorTextViewStyle"/>
 
             <TextView
                 android:text="Name"
                 android:textColor="@color/colorTitle"
-                android:textSize="10dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"
-                style="?android:listSeparatorTextViewStyle"/>
-            <TextView
-                android:text="Number Of Moves"
-                android:textColor="@color/colorTitle"
-                android:textSize="10dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"
+                android:textSize="7dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
                 style="?android:listSeparatorTextViewStyle"/>
             <TextView
                 android:text="time"
                 android:textColor="@color/colorTitle"
-                android:textSize="10dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"
+                android:textSize="7dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
                 style="?android:listSeparatorTextViewStyle"/>
+
+            <TextView
+                android:text="Number Of Moves"
+                android:textColor="@color/colorTitle"
+                android:textSize="7dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                style="?android:listSeparatorTextViewStyle"/>
+
         </TableRow>
 
     </TableLayout>

@@ -3,7 +3,6 @@ package com.example.fistassigment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -24,7 +23,7 @@ public class Activity_TopTen extends AppCompatActivity implements CallBack_TopTe
 
     //Define fragments
     private Fragment_List fragment_list;
-    private Fragment_List fragment_map;
+    private Fragment_Maps fragment_maps;
 
     //Buttons
     Button TopTen_BTN_Main_Page;
@@ -68,10 +67,6 @@ public class Activity_TopTen extends AppCompatActivity implements CallBack_TopTe
     protected void onStart() {
         super.onStart();
         fragment_list.setTable(tops);
-        Log.d("pttt", "size of top " + tops.size());
-        for(int i = 0; i < tops.size(); i++){
-            Log.d("pttt", tops.get(i).getName());
-        }
     }
 
     private void findViews() {
@@ -81,14 +76,19 @@ public class Activity_TopTen extends AppCompatActivity implements CallBack_TopTe
 
 
     private void initFragments() {
+        // Init list
         fragment_list = Fragment_List.newInstance();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.TOPTEN_TBL_TopTen,fragment_list);
         transaction.commit();
-
         fragment_list.setListCallBack(this);
 
-        //Init map
+        // Init map
+        fragment_maps = Fragment_Maps.newInstance();
+        FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
+        transaction2.replace(R.id.TOPTEN_Map_TopTen,fragment_maps);
+        transaction2.commit();
+        fragment_maps.setListCallBack(this);
     }
 
 
