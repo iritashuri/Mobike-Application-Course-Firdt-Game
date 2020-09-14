@@ -69,4 +69,14 @@ public class MySPV {
         editor.apply();
     }
 
+
+    public float getDouble(String key, double def) {
+        return prefs.getLong(key, Double.doubleToRawLongBits(def));
+    }
+
+    public void putDouble(String key, double value) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putLong(key,  Double.doubleToRawLongBits(value));
+        editor.apply();
+    }
 }

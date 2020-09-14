@@ -3,8 +3,8 @@ package com.example.fistassigment;
 import java.util.Date;
 
 public class Winners {
-    private float lat = 0;
-    private float lon = 0;
+    private double lat = 0;
+    private double lon = 0;
     private String timestamp = "";
     private int numOfMoves = 99;
     private String name = "";
@@ -37,7 +37,7 @@ public class Winners {
         return lat;
     }
 
-    public Winners setLat(float lat) {
+    public Winners setLat(double lat) {
         this.lat = lat;
         return this;
     }
@@ -46,7 +46,7 @@ public class Winners {
         return lon;
     }
 
-    public Winners setLon(float lon) {
+    public Winners setLon(double lon) {
         this.lon = lon;
         return this;
     }

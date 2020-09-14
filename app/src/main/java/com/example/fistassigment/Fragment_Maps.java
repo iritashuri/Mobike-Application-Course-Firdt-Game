@@ -1,6 +1,5 @@
 package com.example.fistassigment;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -30,6 +29,7 @@ public class Fragment_Maps extends Fragment implements OnMapReadyCallback{
     private GoogleMap mgoogleMap;
     MapView mMapView;
     Context context;
+    ArrayList<Winners> topTen;
 
 
     private CallBack_TopTen callBack_topTen;
@@ -46,7 +46,6 @@ public class Fragment_Maps extends Fragment implements OnMapReadyCallback{
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // mMapView.onCreate(savedInstanceState);
 
     }
 
@@ -58,50 +57,30 @@ public class Fragment_Maps extends Fragment implements OnMapReadyCallback{
         if (callBack_topTen != null) {
             callBack_topTen.GetTopsFromSP();
         }
-        /*
-        mMapView = (MapView) view.findViewById(R.id.mapView);
-        mMapView.onCreate(savedInstanceState);
-        showMap();
-         */
 
         return view;
     }
 
-    private void showMap() {
-
-        mMapView.onResume(); // needed to get the map to display immediately
-
-        try {
-            MapsInitializer.initialize(getActivity().getApplicationContext());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        mMapView.getMapAsync(new OnMapReadyCallback() {
-            @SuppressLint("MissingPermission")
-            @Override
-            public void onMapReady(GoogleMap mMap) {
-                mgoogleMap = mMap;
-
-                // For showing a move to my location button
-                if (CheckPremission()) {
-                    mgoogleMap.setMyLocationEnabled(true);
-                    mgoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
-                }
-
-                // For dropping a marker at a point on the Map
-                LatLng sydney = new LatLng(-34, 151);
-                mgoogleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
-
-                // For zooming automatically to the location of the marker
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
-                mgoogleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    private void showTopTenOnMap(GoogleMap googleMap) {
+        int counter = 1;
+        for(Winners current: topTen) {
+            if(counter <= 10) {
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(current.getLat(), current.getLon())).title("place " + counter).snippet(current.getName()));
+                CameraPosition current_pos = CameraPosition.builder().target(new LatLng(current.getLat(), current.getLon())).build();
+                googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(current_pos));
+                //increase counter
+                counter++;
             }
-        });
+            else return;
+        }
+    }
+
+    protected void setTopTen(ArrayList<Winners> tops){
+        topTen = tops;
     }
 
 
-    private boolean CheckPremission() {
+    private boolean CheckPermission() {
         if (!(ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) ==
@@ -133,11 +112,6 @@ public class Fragment_Maps extends Fragment implements OnMapReadyCallback{
         super.onSaveInstanceState(outState);
     }
 
-
-    private void setMap(){
-
-
-    }
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
@@ -174,8 +148,6 @@ public class Fragment_Maps extends Fragment implements OnMapReadyCallback{
 
         mgoogleMap = googleMap;
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(40.689247, -74.004502)).title("Statue of Liberty").snippet("something"));
-        CameraPosition Liberty = CameraPosition.builder().target(new LatLng(40.689247, -74.004502)).zoom(16).bearing(0).tilt(45).build();
-        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Liberty));
+        showTopTenOnMap(googleMap);
     }
 }

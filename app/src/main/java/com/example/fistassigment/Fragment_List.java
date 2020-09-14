@@ -21,8 +21,6 @@ public class Fragment_List extends Fragment {
     protected View view;
     private TableLayout List_TBL_TopTen;
 
-    ArrayList <Winners> tops;
-
     private CallBack_TopTen callBack_topTen;
 
     public void setListCallBack(CallBack_TopTen callBack_topTen) {

@@ -40,9 +40,10 @@ public class Activity_TopTen extends AppCompatActivity implements CallBack_TopTe
         // Set Buttons
         findViews();
 
-
         // Set SP
         mySPV = new MySPV(this);
+
+        //Set google map
 
         // Start s game when clicking ENDGAME_BTN_NEWGMAE button
         TopTen_BTN_NEWGMAE.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +68,7 @@ public class Activity_TopTen extends AppCompatActivity implements CallBack_TopTe
     protected void onStart() {
         super.onStart();
         fragment_list.setTable(tops);
+        fragment_maps.setTopTen(tops);
     }
 
     private void findViews() {

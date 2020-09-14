@@ -1,18 +1,27 @@
 package com.example.fistassigment;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -21,13 +30,19 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Activity_Play extends AppCompatActivity {
+public class Activity_Play extends AppCompatActivity implements LocationListener {
 
 
     private MySPV mySPV;
     Gson gson = new Gson();
     final Handler handler = new Handler();
 
+    // Location
+    private LocationManager locationManager;
+    private LocationListener locationListener;
+    private double latitude, longitude;
+    private boolean gps_enabled, network_enabled;
+    private Location location;
 
     private Button[] player1_buttons = new Button[3];
     private Button[] player2_buttons = new Button[3];
@@ -37,7 +52,7 @@ public class Activity_Play extends AppCompatActivity {
 
     // if Player is even - player1 turn, else player2 turn
     private int player;
-    private  boolean end= false;
+    private boolean end = false;
 
     // Set number of moves for each player - start with 1
     private int player1_moves_counter = 1;
@@ -68,15 +83,45 @@ public class Activity_Play extends AppCompatActivity {
 
         // Set SP
         mySPV = new MySPV(this);
+
         // Set player
         player = 0;
+
         // Set Who is  rolling the dice
         Play_TXT_PlayerTurn = findViewById(R.id.Play_TXT_PlayerTurn);
         Play_TXT_PlayerTurn.setText("Donald Duck");
 
-
+        // Set location
+        setLocation();
 
         // Set dice
+        setDice();
+
+        // Load top10ArrayList from SP
+        loadTopTenArrayList();
+
+        // Set Variables as attack buttons and progress bars
+        SetPlayersVars();
+
+    }
+
+    private void SetPlayersVars() {
+        player1_buttons[0] = findViewById(R.id.PLAY_BTN_palyer1_lazer);
+        player2_buttons[0] = findViewById(R.id.PLAY_BTN_palyer2_lazer);
+        player1_buttons[1] = findViewById(R.id.PLAY_BTN_palyer1_whipe);
+        player2_buttons[1] = findViewById(R.id.PLAY_BTN_palyer2_whipe);
+        player1_buttons[2] = findViewById(R.id.PLAY_BTN_palyer1_box);
+        player2_buttons[2] = findViewById(R.id.PLAY_BTN_palyer2_box);
+
+        player1_progressBar = findViewById(R.id.progressBar_player1);
+        player2_progressBar = findViewById(R.id.progressBar_player2);
+
+        // Set initial value to progress bar
+        player1_progressBar.setProgress(100);
+        player2_progressBar.setProgress(100);
+    }
+
+    private void setDice() {
         Play_IMGBTN_Dice = findViewById(R.id.Play_IMGBTN_Dice);
         Play_IMGBTN_Dice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,27 +136,19 @@ public class Activity_Play extends AppCompatActivity {
                 }
             }
         });
+    }
 
-
-        // Load top10ArrayList from SP
-        loadTopTenArrayList();
-
-        // Set Variables as attack buttons and progress bars
-        player1_buttons[0] = findViewById(R.id.PLAY_BTN_palyer1_lazer);
-        player2_buttons[0] = findViewById(R.id.PLAY_BTN_palyer2_lazer);
-        player1_buttons[1] = findViewById(R.id.PLAY_BTN_palyer1_whipe);
-        player2_buttons[1] = findViewById(R.id.PLAY_BTN_palyer2_whipe);
-        player1_buttons[2] = findViewById(R.id.PLAY_BTN_palyer1_box);
-        player2_buttons[2] = findViewById(R.id.PLAY_BTN_palyer2_box);
-
-        player1_progressBar = findViewById(R.id.progressBar_player1);
-        player2_progressBar = findViewById(R.id.progressBar_player2);
-
-        // Set initial value to progress bar
-        player1_progressBar.setProgress(100);
-        player2_progressBar.setProgress(100);
-
-
+    private void setLocation() {
+        locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
+        // check permission
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, R.string.error_permission_map, Toast.LENGTH_LONG).show();
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
     }
 
     // Roll dice with random number and act according the number
@@ -347,6 +384,9 @@ public class Activity_Play extends AppCompatActivity {
         winner.setNumOfMoves(player1_moves_counter);
         winner.setPlayer_number(player);
         //Set Location
+        Log.d("pttt", "latitude = "+latitude +  "longitude = " + longitude);
+        winner.setLat(latitude);
+        winner.setLon(longitude);
     }
 
     private void disableButtons(Button[] buttons){
@@ -375,5 +415,11 @@ public class Activity_Play extends AppCompatActivity {
         if (tops == null){
             tops = new ArrayList<>();
         }
+    }
+
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
     }
 }
