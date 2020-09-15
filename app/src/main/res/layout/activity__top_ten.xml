@@ -16,20 +16,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#CACACA"
+            android:background="@color/colorwhite"
+
             />
         <FrameLayout
             android:id="@+id/TOPTEN_Map_TopTen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#CACACA" />
+            android:background="@color/colorwhite" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/colorgray"
+            android:background="@color/colorwhite"
             android:orientation="horizontal">
 
             <Button

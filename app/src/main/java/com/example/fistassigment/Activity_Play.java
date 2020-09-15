@@ -41,7 +41,6 @@ public class Activity_Play extends AppCompatActivity implements LocationListener
     private LocationManager locationManager;
     private LocationListener locationListener;
     private double latitude, longitude;
-    private boolean gps_enabled, network_enabled;
     private Location location;
 
     private Button[] player1_buttons = new Button[3];

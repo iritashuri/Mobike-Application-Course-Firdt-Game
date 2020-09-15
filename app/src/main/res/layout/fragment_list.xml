@@ -13,7 +13,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
         android:padding="5dp"
-        android:background="@color/colorgray"
+        android:background="#70B8DF"
         >
 
         <TableRow>
