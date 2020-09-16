@@ -67,6 +67,7 @@ public class Activity_TopTen extends AppCompatActivity implements CallBack_TopTe
     @Override
     protected void onStart() {
         super.onStart();
+        // Set fragments
         fragment_list.setTable(tops);
         fragment_maps.setTopTen(tops);
     }

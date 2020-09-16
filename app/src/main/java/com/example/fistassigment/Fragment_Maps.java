@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
+// This fragment represent the top10 locations in google map
 public class Fragment_Maps extends Fragment implements OnMapReadyCallback{
     ArrayList<Winners> tops;
     protected View view;
@@ -61,6 +62,7 @@ public class Fragment_Maps extends Fragment implements OnMapReadyCallback{
         return view;
     }
 
+    // Set locations in he map for the first 10 winners in top10 table
     private void showTopTenOnMap(GoogleMap googleMap) {
         int counter = 1;
         for(Winners current: topTen) {
@@ -79,7 +81,7 @@ public class Fragment_Maps extends Fragment implements OnMapReadyCallback{
         topTen = tops;
     }
 
-
+    // Check permission for map
     private boolean CheckPermission() {
         if (!(ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED &&
@@ -89,10 +91,6 @@ public class Fragment_Maps extends Fragment implements OnMapReadyCallback{
             return false;
         }
         return true;
-    }
-
-    private void findViews(View view) {
-//Map
     }
 
     @Override

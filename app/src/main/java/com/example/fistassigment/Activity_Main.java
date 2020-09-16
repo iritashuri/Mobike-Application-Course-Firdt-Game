@@ -40,6 +40,7 @@ public class Activity_Main extends AppCompatActivity {
         CheckPremission();
     }
 
+    // Check map permissions
     private void CheckPremission() {
         if (!(ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED &&

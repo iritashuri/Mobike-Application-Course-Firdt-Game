@@ -14,11 +14,10 @@ import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 
-
+// This fragment represent the top10 ist in a table
 public class Fragment_List extends Fragment {
 
-
-    protected View view;
+    private View view;
     private TableLayout List_TBL_TopTen;
 
     private CallBack_TopTen callBack_topTen;
@@ -41,7 +40,7 @@ public class Fragment_List extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        if(view==null){
+        if(view == null){
             view = inflater.inflate(R.layout.fragment_list, container, false);
         }
 
@@ -63,9 +62,10 @@ public class Fragment_List extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
-
+    // Set table and display it
     protected void setTable(ArrayList<Winners> tops){
         int counter = 1;
+        // Display only 10 first results
         for(Winners current: tops) {
             if(counter <= 10) {
                 setRowWithWinner(current.getName(), current.getNumOfMoves(), current.getTimestamp(), counter);
@@ -76,6 +76,7 @@ public class Fragment_List extends Fragment {
         }
     }
 
+    // Set 1 row in top10 table
     private void setRowWithWinner(String winner_name, int numberOfMoves, String timestamp, int counter) {
         // Define new row
         TableRow row = new TableRow(getActivity());
@@ -86,11 +87,11 @@ public class Fragment_List extends Fragment {
         setCell(timestamp, row);
         setCell("" + numberOfMoves, row);
 
-
         // Add new row to table
         List_TBL_TopTen.addView(row);
     }
 
+    // Set 1 cell in a row
     private void setCell(String str, TableRow row){
         // Define cell
         TextView txt = new TextView(getActivity().getApplication());
@@ -104,10 +105,6 @@ public class Fragment_List extends Fragment {
 
     }
 
-    private void setTextView(TextView txt, String s) {
-        txt.setText(s);
-
-    }
 
     @Override
     public void onHiddenChanged(boolean hidden) {

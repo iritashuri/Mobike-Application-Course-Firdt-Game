@@ -26,15 +26,15 @@
 
         <ImageView
             android:id="@+id/ENDGAME_IMG_WINNER"
-            android:layout_width="255dp"
-            android:layout_height="369dp"
+            android:layout_width="245dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_gravity="center"
-            android:layout_marginTop="189dp"
-            android:layout_marginEnd="75dp"
-            android:layout_marginBottom="173dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="81dp"
+            android:layout_marginBottom="112dp"
             app:srcCompat="@drawable/disney_icons_48181" />
 
         <LinearLayout

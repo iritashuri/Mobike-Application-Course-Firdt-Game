@@ -11,7 +11,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -120,6 +119,7 @@ public class Activity_Play extends AppCompatActivity implements LocationListener
         player2_progressBar.setProgress(100);
     }
 
+    // Set up dice and call rollDice function
     private void setDice() {
         Play_IMGBTN_Dice = findViewById(R.id.Play_IMGBTN_Dice);
         Play_IMGBTN_Dice.setOnClickListener(new View.OnClickListener() {
@@ -139,7 +139,8 @@ public class Activity_Play extends AppCompatActivity implements LocationListener
 
     private void setLocation() {
         locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
-        // check permission
+
+        // Check map permission
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, R.string.error_permission_map, Toast.LENGTH_LONG).show();
             return;
@@ -157,7 +158,6 @@ public class Activity_Play extends AppCompatActivity implements LocationListener
             // Show image of the dice number and set payer dice score with the randomNumber
             case 1:
                 Play_IMGBTN_Dice.setImageResource(R.drawable.dice1);
-                //Log.d("pttt", "player = " + player + "dic1");
                 setPlayerScore(1);
                 break;
             case 2:
@@ -218,7 +218,7 @@ public class Activity_Play extends AppCompatActivity implements LocationListener
             handler.postDelayed(new Runnable() {
                 public void run() {
                     Play_TXT_PlayerTurn.setText("Donald Duck");
-                    Play_IMGBTN_Dice.setImageResource(R.drawable.dice1);
+                    Play_IMGBTN_Dice.setImageResource(R.drawable.startdice);
                 }
             }, 1000);   //1 seconds
         }
@@ -275,6 +275,7 @@ public class Activity_Play extends AppCompatActivity implements LocationListener
         }, delay);
     }
 
+    // Play 1 turn
     private void player_turn(final Button[] player_buttons, final ProgressBar enemy_progressBar, final Button[] enemy_buttons) {
          // Act according to a random number between 0 to 2
           int random = rand.nextInt(3);
@@ -364,14 +365,15 @@ public class Activity_Play extends AppCompatActivity implements LocationListener
 
     private void checkAndAddWinnerToScoresArray(Winners winner) {
         boolean is_inserted  = false;
+        // Go over each winner in the winners array list and insert current one in the correct place
             for (Winners t : tops) {
                 if (winner.getNumOfMoves() <= t.getNumOfMoves()) {
                     tops.add(tops.indexOf(t), winner);
-
                     is_inserted = true;
                     break;
                 }
             }
+            //If list size > 0 and winner didn't insert to the array list, add it in the end of the list
             if(tops.size() < 10 && !is_inserted) {
                 tops.add(winner);
             }
@@ -382,8 +384,8 @@ public class Activity_Play extends AppCompatActivity implements LocationListener
         winner.setName(name);
         winner.setNumOfMoves(player1_moves_counter);
         winner.setPlayer_number(player);
-        //Set Location
-        Log.d("pttt", "latitude = "+latitude +  "longitude = " + longitude);
+
+        // Set Location
         winner.setLat(latitude);
         winner.setLon(longitude);
     }
