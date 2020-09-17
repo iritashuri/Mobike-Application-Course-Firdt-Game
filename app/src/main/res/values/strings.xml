@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">myGame</string>
-    <string name="box">Box</string>
-    <string name="whipe">Whipe</string>
-    <string name="lazer">Lazer</string>
+    <string name="box">Punch</string>
+    <string name="whipe">Whip</string>
+    <string name="lazer">Laser</string>
     <string name="todo">TODO</string>
     <string name="start">Start New Game</string>
     <string name="welcome">Welcome!</string>

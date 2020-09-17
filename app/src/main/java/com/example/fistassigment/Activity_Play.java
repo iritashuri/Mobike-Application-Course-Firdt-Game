@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -35,7 +36,7 @@ public class Activity_Play extends AppCompatActivity implements LocationListener
     private MySPV mySPV;
     Gson gson = new Gson();
     final Handler handler = new Handler();
-
+    MediaPlayer sound;
     // Location
     private LocationManager locationManager;
     private LocationListener locationListener;
@@ -282,12 +283,15 @@ public class Activity_Play extends AppCompatActivity implements LocationListener
             switch (random) {
                 // Case 0 - lazer, case 1 - whip, case 3 - box)
                 case 0:
+                    sound = MediaPlayer.create(this, R.raw.laser);
                     clickBtn(player_buttons[0], enemy_progressBar, player_buttons, enemy_buttons, 25);
                     break;
                 case 1:
+                    sound = MediaPlayer.create(this, R.raw.whip);
                     clickBtn(player_buttons[1], enemy_progressBar, player_buttons, enemy_buttons, 20);
                     break;
                 case 2:
+                    sound = MediaPlayer.create(this, R.raw.punch);
                     clickBtn(player_buttons[2], enemy_progressBar, player_buttons, enemy_buttons, 10);
                     break;
                 default:
@@ -306,6 +310,7 @@ public class Activity_Play extends AppCompatActivity implements LocationListener
 
     // Change button color for a second (to illustrate clicking)
     private void changeColor(final Button btn) {
+        sound.start();
         new CountDownTimer(1000, 100) {
             public void onTick(long millisUntilFinished) {
                 btn.setBackgroundColor(Color.parseColor("#D9E3F3"));
