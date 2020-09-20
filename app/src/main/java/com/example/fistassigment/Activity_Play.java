@@ -282,9 +282,10 @@ public class Activity_Play extends AppCompatActivity implements LocationListener
 
     // Play 1 turn
     private void player_turn(final Button[] player_buttons, final ProgressBar enemy_progressBar, final Button[] enemy_buttons) {
-         // Act according to a random number between 0 to 2
+        //Clean sound buffer
         if(sound != null)
             sound.reset();
+        // Act according to a random number between 0 to 2
         int random = rand.nextInt(3);
         switch (random) {
                 // Case 0 - lazer, case 1 - whip, case 3 - box)
