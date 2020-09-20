@@ -37,6 +37,7 @@ public class Activity_Play extends AppCompatActivity implements LocationListener
     Gson gson = new Gson();
     final Handler handler = new Handler();
     MediaPlayer sound;
+
     // Location
     private LocationManager locationManager;
     private LocationListener locationListener;
@@ -300,6 +301,7 @@ public class Activity_Play extends AppCompatActivity implements LocationListener
     }
 
     private void clickBtn(Button button, ProgressBar enemy_progressBar, Button[] player_buttons, Button[] enemy_buttons, int increase) {
+        sound.start();
         // Illustrate button clicking
         changeColor(button);
         // Increase enemy progress bar according the clicked button
@@ -310,7 +312,6 @@ public class Activity_Play extends AppCompatActivity implements LocationListener
 
     // Change button color for a second (to illustrate clicking)
     private void changeColor(final Button btn) {
-        sound.start();
         new CountDownTimer(1000, 100) {
             public void onTick(long millisUntilFinished) {
                 btn.setBackgroundColor(Color.parseColor("#D9E3F3"));
@@ -344,9 +345,9 @@ public class Activity_Play extends AppCompatActivity implements LocationListener
             Winners winner = new Winners();
             // Set winner
             if(player1_progressBar.getProgress() <= 0)
-                setWinner("Mickey Mouse", player1_moves_counter, winner);
+                setWinner("Mickey Mouse", player2_moves_counter, winner);
             else
-                setWinner("Donald Duck", player2_moves_counter, winner);
+                setWinner("Donald Duck", player1_moves_counter, winner);
             setWinnerOnSP(winner);
 
             // Check if winner needs to be inserted to to10 and if yes, insert him.
