@@ -84,6 +84,9 @@ public class Activity_Play extends AppCompatActivity implements LocationListener
         // Set SP
         mySPV = new MySPV(this);
 
+        //
+
+
         // Set player
         player = 0;
 
@@ -94,14 +97,15 @@ public class Activity_Play extends AppCompatActivity implements LocationListener
         // Set location
         setLocation();
 
-        // Set dice
-        setDice();
-
         // Load top10ArrayList from SP
         loadTopTenArrayList();
 
         // Set Variables as attack buttons and progress bars
         SetPlayersVars();
+
+        // Set dice
+        setDice();
+
 
     }
 
@@ -133,7 +137,6 @@ public class Activity_Play extends AppCompatActivity implements LocationListener
                     Play_TXT_PlayerTurn.setText("");
                     view.setVisibility(View.GONE);
                     play();
-
                 }
             }
         });
@@ -280,8 +283,10 @@ public class Activity_Play extends AppCompatActivity implements LocationListener
     // Play 1 turn
     private void player_turn(final Button[] player_buttons, final ProgressBar enemy_progressBar, final Button[] enemy_buttons) {
          // Act according to a random number between 0 to 2
-          int random = rand.nextInt(3);
-            switch (random) {
+        if(sound != null)
+            sound.reset();
+        int random = rand.nextInt(3);
+        switch (random) {
                 // Case 0 - lazer, case 1 - whip, case 3 - box)
                 case 0:
                     sound = MediaPlayer.create(this, R.raw.laser);
